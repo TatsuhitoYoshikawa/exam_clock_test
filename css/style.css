@@ -1,0 +1,12 @@
+#show_digi_clock, #show_ana_clock {
+    display: none;
+  }
+  
+#digital_button.active, #analogue_button.active{
+    color: blue;
+    background-color: orange;
+  }
+  
+#show_digi_clock.active, #show_ana_clock.active {
+    display: block;
+  }
