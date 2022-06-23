@@ -1,6 +1,6 @@
 //////////// 時刻表示を秒刻みで更新する /////////////////
-setInterval(GetTime, 1000);
-
+setInterval(GetTimeDigital, 1000);
+setInterval(GetTimeAnalogue, 1000);
 
 
 /////////////////// 関数部 /////////////////////
@@ -15,7 +15,7 @@ function set2fig(num) {
  }
 
 // 現在時刻を取得・表示する（デジタル）
-function GetTime() {
+function GetTimeDigital() {
     //// 時刻取得
     // new演算子は後に来るコンストラクタのインスタンスを生成する
     // Dateコンストラクタからインスタンスを生成
@@ -34,6 +34,40 @@ function GetTime() {
     // 取得した要素に時刻表示を追記
     target.innerHTML = clock;
 };
+
+
+// 現在時刻を取得・表示する（アナログ）
+function GetTimeAnalogue() {
+  // 時間を取得
+  var nowtime = new Date();
+  var Hour = nowtime.getHours();
+  var Min = nowtime.getMinutes();
+  var Sec = nowtime.getSeconds();
+
+  // 針の角度
+  var deg_h = Hour * (360 / 12) + Min * (360 / 12 / 60);
+  var deg_m = Min * (360 / 60);
+  var deg_s = Sec * (360 / 60);
+
+  // それぞれの針に角度を設定
+  document.querySelector(".hour").style.transform = `rotate(${deg_h}deg)`;
+  document.querySelector(".min").style.transform = `rotate(${deg_m}deg)`;
+  document.querySelector(".sec").style.transform = `rotate(${deg_s}deg)`;
+}
+
+// アナログ時計の目盛り作成
+window.onload = function () {
+  for (let i = 1; i <= 12; i++) {
+      // scaleクラスの要素の最後にdiv要素を追加
+      let scaleElem = document.querySelector(".scale");
+      let addElem = document.createElement("div");
+      scaleElem.appendChild(addElem);
+
+      // 角度をつける
+      // scaleクラスの下にあるdiv要素をforで12回追加（時間の目盛り）するので、nth-child()でそれぞれを回転させる
+      document.querySelector(".scale div:nth-child(" + i + ")").style.transform = `rotate(${i * 30}deg)`;
+  }
+}
 
 
 
