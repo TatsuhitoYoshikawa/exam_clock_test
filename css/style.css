@@ -23,7 +23,9 @@
 
 
 /**************** デジタル時計部分 *******************/
-
+#show_digi_clock{
+  font-size: 100px;
+}
 
 /**************** アナログ時計部分 ******************/
 
@@ -114,3 +116,30 @@
     height: 12px;
     background-color: #C6A35B;
 }
+
+
+/****************** ボタン配置 ***********************/
+.I-I, .I-II, .II-I, .II-II {
+  display: block;
+}
+
+#set_button1_1, #set_button1_2, #set_button2_1, #set_button2_2 {
+  width: 8em;
+  height:3.5em;
+}
+
+#start_button1_1, #start_button1_2, #start_button2_1, #start_button2_2 {
+  width: 4em;
+  height:3.5em;
+}
+
+.button_wrapper {
+  width: 50%;
+  height: 50px;
+}
+
+
+.ad_button {
+  display: inline;
+}
+

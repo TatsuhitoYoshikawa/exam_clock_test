@@ -1,25 +1,87 @@
-//////////// 時刻表示を秒刻みで更新する /////////////////
-let timerId_d = setInterval(GetTimeDigital, 1000);
-let timerId_a = setInterval(GetTimeAnalogue, 1000);
+/////////////////// 関数部 /////////////////////
 
-//// SETボタンを押すと、指定された時刻を表示して時計が止まる
-// 時刻を指定
-const SET_TIME = "10:00:00";
+// デジタル時計の表示らしく、常に2桁表示させる
+function set2fig(num) {
+  // 桁数が1桁だったら先頭に0を加えて2桁に調整する
+  var ret;
+  if( num < 10 ) { ret = "0" + num; }
+  else { ret = num; }
+  return ret;
+}
 
-set_button.addEventListener("click", function() {
-  // デジタル時計のdiv要素を取得
+// 現在時刻を取得・表示する（デジタル）
+function GetTimeDigital() {
+  //// 時刻取得
+  // new演算子は後に来るコンストラクタのインスタンスを生成する
+  // Dateコンストラクタからインスタンスを生成
+  // 時間・分・秒をメソッドで取り出す
+  var nowtime = new Date();
+  var Hour = set2fig(nowtime.getHours());
+  var Min = set2fig(nowtime.getMinutes());
+  var Sec = set2fig(nowtime.getSeconds());
+
+  // 文字列として結合したいので、最初に空白文字列を置いて、足していく
+  var clock = "" + Hour + ":" + Min + ":" + Sec;
+
+  //// 時刻表示を追記
+  // htmlファイルにある要素を取得
   var target = document.getElementById('show_digi_clock');
-  // 取得した要素に10:00:00をSET
-  target.innerHTML = SET_TIME;
-  SetTimeAnalogue(10, 0, 0);
-  // setIntervalを止める＝時計の進行を止める
-  clearInterval(timerId_d);
-  clearInterval(timerId_a);
-  }
-)
+  // 取得した要素に時刻表示を追記
+  target.innerHTML = clock;
+};
 
-//// STARTボタンを押すと、SETした時刻から時計が進み始める
-start_button.addEventListener("click", function() {
+
+// 現在時刻を取得・表示する（アナログ）
+function GetTimeAnalogue() {
+// 時間を取得
+var nowtime = new Date();
+var Hour = nowtime.getHours();
+var Min = nowtime.getMinutes();
+var Sec = nowtime.getSeconds();
+
+// 針の角度
+var deg_h = Hour * (360 / 12) + Min * (360 / 12 / 60);
+var deg_m = Min * (360 / 60);
+var deg_s = Sec * (360 / 60);
+
+// それぞれの針に角度を設定
+document.querySelector(".hour").style.transform = `rotate(${deg_h}deg)`;
+document.querySelector(".min").style.transform = `rotate(${deg_m}deg)`;
+document.querySelector(".sec").style.transform = `rotate(${deg_s}deg)`;
+}
+
+// アナログ時計に特定の時刻を設定
+function SetTimeAnalogue(s_hour, s_min, s_sec) {
+// 針の角度
+var deg_h = s_hour * (360 / 12) + s_min * (360 / 12 / 60);
+var deg_m = s_min * (360 / 60);
+var deg_s = s_sec * (360 / 60);  
+
+// それぞれの針に角度を設定
+document.querySelector(".hour").style.transform = `rotate(${deg_h}deg)`;
+document.querySelector(".min").style.transform = `rotate(${deg_m}deg)`;
+document.querySelector(".sec").style.transform = `rotate(${deg_s}deg)`;
+}
+
+// SETボタンを押すと指定の時刻で止める
+function SetButtonAction(sh, sm, ss) {
+// デジタル時計用の文字列に
+const SET_TIME = set2fig(sh) + ":" + set2fig(sm) + ":" + set2fig(ss);
+// デジタル時計のdiv要素を取得
+var target = document.getElementById('show_digi_clock');
+// 取得した要素に時刻をSET
+target.innerHTML = SET_TIME;
+SetTimeAnalogue(sh, sm, ss);
+// setIntervalを止める＝時計の進行を止める
+clearInterval(timerId_d);
+clearInterval(timerId_a);
+
+return SET_TIME;
+}
+
+
+// STARTボタンを押すと、止まっていた時刻から進み始める
+function StartButtonAction(sh, sm, ss) {
   // 準備として、今日の日付を取得して文字列にする
   var tmp_ymd = new Date();
   var yyyy = tmp_ymd.getFullYear();
@@ -27,8 +89,8 @@ start_button.addEventListener("click", function() {
   var dd = set2fig(tmp_ymd.getDate());
   const YMD = yyyy + "-" + mm + "-" + dd + " ";
 
-  // 指定した時刻と今日の日付を連結して、時刻型に変換
-  dt1 = new Date(YMD + SET_TIME);
+  // 押されたボタンで設定された時刻と今日の日付を連結して、時刻型に変換
+  dt1 = new Date(YMD + SetButtonAction(sh, sm, ss));
 
   // 指定した時刻から1秒ずつ増やしていく
   let timerId_s = setInterval(function() {
@@ -49,61 +111,13 @@ start_button.addEventListener("click", function() {
     // アナログ時計の時刻設定関数を流用
     SetTimeAnalogue(renew_h, renew_m, renew_s);
   }, 1000)
-})
-
-
-
-/////////////////// 関数部 /////////////////////
-
-// デジタル時計の表示らしく、常に2桁表示させる
-function set2fig(num) {
-    // 桁数が1桁だったら先頭に0を加えて2桁に調整する
-    var ret;
-    if( num < 10 ) { ret = "0" + num; }
-    else { ret = num; }
-    return ret;
- }
-
-// 現在時刻を取得・表示する（デジタル）
-function GetTimeDigital() {
-    //// 時刻取得
-    // new演算子は後に来るコンストラクタのインスタンスを生成する
-    // Dateコンストラクタからインスタンスを生成
-    // 時間・分・秒をメソッドで取り出す
-    var nowtime = new Date();
-    var Hour = set2fig(nowtime.getHours());
-    var Min = set2fig(nowtime.getMinutes());
-    var Sec = set2fig(nowtime.getSeconds());
-
-    // 文字列として結合したいので、最初に空白文字列を置いて、足していく
-    var clock = "" + Hour + ":" + Min + ":" + Sec;
-
-    //// 時刻表示を追記
-    // htmlファイルにある要素を取得
-    var target = document.getElementById('show_digi_clock');
-    // 取得した要素に時刻表示を追記
-    target.innerHTML = clock;
-};
-
-
-// 現在時刻を取得・表示する（アナログ）
-function GetTimeAnalogue() {
-  // 時間を取得
-  var nowtime = new Date();
-  var Hour = nowtime.getHours();
-  var Min = nowtime.getMinutes();
-  var Sec = nowtime.getSeconds();
-
-  // 針の角度
-  var deg_h = Hour * (360 / 12) + Min * (360 / 12 / 60);
-  var deg_m = Min * (360 / 60);
-  var deg_s = Sec * (360 / 60);
-
-  // それぞれの針に角度を設定
-  document.querySelector(".hour").style.transform = `rotate(${deg_h}deg)`;
-  document.querySelector(".min").style.transform = `rotate(${deg_m}deg)`;
-  document.querySelector(".sec").style.transform = `rotate(${deg_s}deg)`;
 }
+
+
+
+//////////////////////// 関数部終了 ///////////////////////////
+
+
 
 // アナログ時計の目盛り作成
 window.onload = function () {
@@ -112,25 +126,39 @@ window.onload = function () {
       let scaleElem = document.querySelector(".scale");
       let addElem = document.createElement("div");
       scaleElem.appendChild(addElem);
-
+  
       // 角度をつける
       // scaleクラスの下にあるdiv要素をforで12回追加（時間の目盛り）するので、nth-child()でそれぞれを回転させる
       document.querySelector(".scale div:nth-child(" + i + ")").style.transform = `rotate(${i * 30}deg)`;
+    }
   }
-}
+  
 
-// アナログ時計に特定の時刻を設定
-function SetTimeAnalogue(s_hour, s_min, s_sec) {
-  // 針の角度
-  var deg_h = s_hour * (360 / 12) + s_min * (360 / 12 / 60);
-  var deg_m = s_min * (360 / 60);
-  var deg_s = s_sec * (360 / 60);  
 
-  // それぞれの針に角度を設定
-  document.querySelector(".hour").style.transform = `rotate(${deg_h}deg)`;
-  document.querySelector(".min").style.transform = `rotate(${deg_m}deg)`;
-  document.querySelector(".sec").style.transform = `rotate(${deg_s}deg)`;
-}
+
+  //////////// 時刻表示を秒刻みで更新する /////////////////
+let timerId_d = setInterval(GetTimeDigital, 1000);
+let timerId_a = setInterval(GetTimeAnalogue, 1000);
+
+
+// SETボタンを押した時のアクション
+// addEventListenerの第二引数は正確には関数ではなくListenerであり、
+// 引数付きの関数を入れると、それは”値（返り値）”となるので、うまく動かない
+// それを避けるために無名関数で一度囲っている
+const time1_1 = [9, 30, 0];
+const time1_2 = [14, 0, 0];
+const time2_1 = [9, 30, 0];
+const time2_2 = [14, 0, 0];
+set_button1_1.addEventListener("click", function() {SetButtonAction(time1_1[0], time1_1[1], time1_1[2]);});
+set_button1_2.addEventListener("click", function() {SetButtonAction(time1_2[0], time1_2[1], time1_2[2]);});
+set_button2_1.addEventListener("click", function() {SetButtonAction(time2_1[0], time2_1[1], time2_1[2]);});
+set_button2_2.addEventListener("click", function() {SetButtonAction(time2_2[0], time2_2[1], time2_2[2]);});
+
+//// STARTボタンを押すと、SETした時刻から時計が進み始める
+start_button1_1.addEventListener("click", function() {StartButtonAction(time1_1[0], time1_1[1], time1_1[2]);});
+start_button1_2.addEventListener("click", function() {StartButtonAction(time1_2[0], time1_2[1], time1_2[2]);});
+start_button2_1.addEventListener("click", function() {StartButtonAction(time2_1[0], time2_1[1], time2_1[2]);});
+start_button2_2.addEventListener("click", function() {StartButtonAction(time2_2[0], time2_2[1], time2_2[2]);});
 
 
 
@@ -167,5 +195,7 @@ analogue_button.addEventListener("click", function() {
 // デフォルトではデジタル時計のみ表示
 show_digi_clock.classList.toggle("active");
 digital_button.classList.toggle("active")
+
+
 
 
