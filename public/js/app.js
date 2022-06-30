@@ -192,9 +192,9 @@ analogue_button.addEventListener("click", function() {
     }
   });
 
-// デフォルトではデジタル時計のみ表示
-show_digi_clock.classList.toggle("active");
-digital_button.classList.toggle("active")
+// デフォルトではアナログ時計のみ表示
+show_ana_clock.classList.toggle("active");
+analogue_button.classList.toggle("active")
 
 
 
