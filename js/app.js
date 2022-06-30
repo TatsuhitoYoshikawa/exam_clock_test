@@ -120,6 +120,7 @@ function StartButtonAction(sh, sm, ss) {
 
 
 // アナログ時計の目盛り作成
+// 5分ごとの太い目盛り
 window.onload = function () {
   for (let i = 1; i <= 12; i++) {
       // scaleクラスの要素の最後にdiv要素を追加
@@ -132,7 +133,6 @@ window.onload = function () {
       document.querySelector(".scale div:nth-child(" + i + ")").style.transform = `rotate(${i * 30}deg)`;
     }
   }
-  
 
 
 

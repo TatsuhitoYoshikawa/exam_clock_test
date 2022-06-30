@@ -42,7 +42,7 @@
 
 .clock {
     background-color: rgba(255, 243, 217, 0.2);
-    border: 3px solid #C6A35B;
+    border: 3px solid black;
     width: 400px;
     height: 400px;
     position: relative;
@@ -53,7 +53,7 @@
 .clock::after {
     width: 16px;
     height: 16px;
-    background: #C6A35B;
+    background: black;
     content: "";
 
     position: absolute;
@@ -70,7 +70,7 @@
 .hour {
     width: 8px; /* 領域のサイズ・背景色を指定することで”線分”を作っているイメージ */
     height: 140px;
-    background: #C6A35B;
+    background: black;
     top: calc(50% - 140px); /* 親要素はclockクラス */ /* topの位置を基準にheightだけ下に伸びる */
     left: calc(50% - 4px); /* leftで左から見た時の基準を設定 */
 }
@@ -78,7 +78,7 @@
 .min {
     width: 4px;
     height: 180px;
-    background: #C6A35B;
+    background: black;
     top: calc(50% - 180px);
     left: calc(50% - 2px);
 }
@@ -86,10 +86,44 @@
 .sec {
     width: 1px;
     height: 180px;
-    background: #D4BB92;
+    background: red;
     top: calc(50% - 180px);
     left: calc(50% - 0.5px);
 }
+
+/* 時計の文字盤 */
+.c-clock__12 {
+  position: absolute;
+  top: 15px;
+  left: calc(50%);
+  transform: translateX(-50%);
+  font-size: 25px;
+}
+
+.c-clock__3 {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  font-size: 25px;
+}
+
+.c-clock__6 {
+  position: absolute;
+  bottom: 15px;
+  left: calc(50%);
+  transform: translateX(-50%);
+  font-size: 25px;
+}
+
+.c-clock__9 {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  font-size: 25px;
+}
+
 
 .scale {
     position: relative;
@@ -114,8 +148,10 @@
     content: "";
     width: 4px;
     height: 12px;
-    background-color: #C6A35B;
+    background-color: black;
 }
+
+
 
 
 /****************** ボタン配置 ***********************/

@@ -2,11 +2,11 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>EXAM_CLOCK</title>
+  <title>東大試験時計</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h2><div id="title">EXAM CLOCK</div></h2>
+  <h1><div id="title">東大試験時計</div></h1>
   <div class="button_wrapper">
     <div class="ad_button">
       <button id="digital_button">デジタル</button>
@@ -34,9 +34,14 @@
   <div id="show_ana_clock" class="wrapper">
     <div class="clock">
         <div class="scale"></div>
+        <div class="scale_mini"></div>
         <div class="hour line"></div> <!--クラスを複数設定-->
         <div class="min line"></div>
         <div class="sec line"></div>
+        <span class="c-clock__12">12</span> <!-- 時計文字 -->
+        <span class="c-clock__3">3</span> <!-- 時計文字 -->
+        <span class="c-clock__6">6</span> <!-- 時計文字 -->
+        <span class="c-clock__9">9</span> <!-- 時計文字 -->
     </div>
 </div>
   <script src="js/jquery-3.3.1.min.js"></script>
