@@ -137,8 +137,8 @@ window.onload = function () {
 
 
   //////////// 時刻表示を秒刻みで更新する /////////////////
-let timerId_d = setInterval(GetTimeDigital, 1000);
-let timerId_a = setInterval(GetTimeAnalogue, 1000);
+let timerId_d = setInterval(GetTimeDigital, 100);
+let timerId_a = setInterval(GetTimeAnalogue, 100);
 
 
 // SETボタンを押した時のアクション
