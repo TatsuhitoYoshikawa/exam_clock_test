@@ -1,7 +1,50 @@
 <!DOCTYPE html>
-<html>
-<head></head>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>東大試験時計</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
 <body>
-<h1>Hello world</h1>
+  <h1><div id="title">東大試験時計</div></h1>
+  <div class="button_wrapper">
+    <div class="ad_button">
+      <button id="digital_button">デジタル</button>
+      <button id="analogue_button">アナログ</button>
+    </div>
+    <br><br>
+    <div class="I-I">
+      <button id="set_button1_1">1日目1限<br>国語</button>
+      <button id="start_button1_1">試験<br>開始</button>
+    </div>
+    <div class="I-II">
+      <button id="set_button1_2">1日目2限<br>数学</button>
+      <button id="start_button1_2">試験<br>開始</button>
+    </div>
+    <div class="II-I">
+      <button id="set_button2_1">2日目1限<br>地歴/理科</button>
+      <button id="start_button2_1">試験<br>開始</button>
+    </div>
+    <div class="II-II">
+      <button id="set_button2_2">2日目2限<br>外国語</button>
+      <button id="start_button2_2">試験<br>開始</button>
+    </div>
+  </div>
+  <div id="show_digi_clock"></div>
+  <div id="show_ana_clock" class="wrapper">
+    <div class="clock">
+        <div class="scale"></div>
+        <div class="scale_mini"></div>
+        <div class="hour line"></div> <!--クラスを複数設定-->
+        <div class="min line"></div>
+        <div class="sec line"></div>
+        <span class="c-clock__12">12</span> <!-- 時計文字 -->
+        <span class="c-clock__3">3</span> <!-- 時計文字 -->
+        <span class="c-clock__6">6</span> <!-- 時計文字 -->
+        <span class="c-clock__9">9</span> <!-- 時計文字 -->
+    </div>
+</div>
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
